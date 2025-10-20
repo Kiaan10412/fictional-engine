@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="please paste the API key in here")
 
 print("🚑 Welcome to the First Aid Helper!")
 print("Type the emergency (e.g. burn, bleeding, choking, fainting) or 'quit' to exit.\n")
