@@ -33,4 +33,6 @@ while True:
         )
 
         advice = response.choices[0].message
-        print(advice)
+        advice=(str(advice))
+        length=len(advice)
+        print(advice[31:length-99])
