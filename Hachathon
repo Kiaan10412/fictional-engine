@@ -1,0 +1,36 @@
+from openai import OpenAI
+
+client = OpenAI(api_key="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")
+
+print("🚑 Welcome to the First Aid Helper!")
+print("Type the emergency (e.g. burn, bleeding, choking, fainting) or 'quit' to exit.\n")
+
+firstaid = {
+    "burn": "Cool the burn with cool running water for 20 minutes. Do not use ice or ointments.",
+    "bleeding": "Apply pressure with a clean cloth to stop bleeding. Do not remove the cloth if it soaks through.",
+    "choking": "If the person can't breathe or talk, give 5 back blows between the shoulder blades.",
+    "fainting": "Lay the person down and raise their legs. Loosen any tight clothing. If they don’t wake up, call emergency services.",
+    "nosebleed": "Sit upright and pinch the soft part of the nose for 10 minutes. Lean forward slightly."
+}
+
+while True:
+    issue = input("What’s the emergency? ").lower()
+    if issue == "quit":
+        print("Thank you for using the First Aid Helper. Stay safe!")
+        break
+
+    if issue in firstaid:
+        print(f"\nFirst Aid for {issue}:\n{firstaid[issue]}\n")
+    else:
+        print("\nI don’t have info for that yet. Let me ask AI...")
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a first aid assistant giving safe, short, and accurate first aid steps that are all on one line but make it long."},
+                {"role": "user", "content": f"Give me clear first aid steps for {issue} only raw text nothing extra no \n because i have a system to add slash n."}
+            ]
+        )
+
+        advice = response.choices[0].message
+        print(advice)
